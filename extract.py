@@ -33,6 +33,11 @@ def _add_entry(keepass, entry):
     # some attributes need to be set after creation
     new_entry.autotype_enabled = entry.autotype_enabled
     new_entry.autotype_sequence = entry.autotype_sequence
+    for key, value in entry.custom_properties.items():
+        new_entry.set_custom_property(key or '', value or '')
+    for attachment in entry.attachments:
+        new_id = keepass.add_binary(attachment.binary)
+        new_entry.add_attachment(id=new_id, filename=attachment.filename)
     return new_entry
 
 # setting arguments and get them
@@ -50,7 +55,7 @@ output_path = args.output_keepass
 input_password = args.input_password if args.input_password else getpass(prompt='Input KeePass password:')
 output_password = args.output_password if args.output_password else getpass(prompt='Output KeePass password:')
 
-# open keepass files 
+# open keepass files
 input_keepass = PyKeePass(input_path, input_password)
 output_keepass = PyKeePass(output_path, output_password)
 
