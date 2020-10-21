@@ -6,7 +6,7 @@ A small tool to export a subset of entries from one keepass to another one.
 * pykeepass
 
 ### Set attributes in existing KeePass
-First you need to add a custom property to every entry in the existing KeePass that should be extracted. The default key is `extract_to`, the value specifies the group path in the output KeePass.
+First you need to add a custom property to every entry in the existing KeePass that should be extracted. The default key is `extract_to`, the value specifies the group path in the output KeePass when ending with `/` or the group path and entry title otherwise.
 
 ### Extract entries
 > :exclamation: **Don't pass passwords on the command line, unless it is absolutely necessary.** You will be asked for them.

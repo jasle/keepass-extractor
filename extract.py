@@ -21,9 +21,16 @@ def _add_entry(keepass, entry):
     """
     Add an entry to a keepass
     """
-    group = _get_group(keepass, entry.get_custom_property(search_attribute) or '')
+    if entry.get_custom_property(search_attribute).endswith('/'):
+        group = _get_group(keepass, entry.get_custom_property(search_attribute))
+        new_title = entry.title or ''
+    else:
+        group_path, _drop = entry.get_custom_property(search_attribute).rsplit('/', 1)
+        group = _get_group(keepass, group_path)
+        _drop, new_title = entry.get_custom_property(search_attribute).rsplit('/', 1)
+
     new_entry = keepass.add_entry(destination_group=group,
-                                  title=entry.title or '',
+                                  title=new_title,
                                   username=entry.username or '',
                                   password=entry.password or '',
                                   url=entry.url or '',
